@@ -1,0 +1,58 @@
+<!-- img box section -->
+<div class="three-img-box">
+  <div class="container">
+      <div class="three-img-box-wrapper">
+        {% for block in section.blocks limit:3 %}
+            <div class="single-img-box" style="background-image: url('{{ block.settings.bg_img |  img_url: 'original' }}');">
+             {% if section.settings.overlay %}  <div class="single-img-box-overlay"></div> {% endif %}
+                <div class="single-img-box-content">
+                    <h4 class="single-img-box-title">{{ block.settings.heading }}</h4>
+                    <p>{{ block.settings.description }}</p>
+                </div>
+            </div>
+          {% endfor %}
+      </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Three img box",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "overlay",
+        "label": "Background Overlay",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "name": "single img box",
+        "type": "single_img_box",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "bg_img",
+            "label": "Select Background image"
+          },{
+            "type": "text",
+            "id": "heading",
+            "label": "Enter heading"
+          },{
+            "type": "textarea",
+            "id": "description",
+            "label": "Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Three img box",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}

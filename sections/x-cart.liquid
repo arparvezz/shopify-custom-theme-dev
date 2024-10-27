@@ -1,0 +1,29 @@
+{%- stylesheet -%}
+  .x-cart-wrapper{
+    padding: 50px;
+    background: #d4efdf;
+  }
+{%- endstylesheet -%}
+
+<div class="container">
+    <div class="x-cart-wrapper" id="x-cart-section">
+        <h2 class="cart-item-count">Total Item in cart:{{ cart.item_count }}</h2>
+        <p class="cart-total">{{ cart.total_price | money_with_currency }}</p>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "x-cart",
+    "settings": [
+      
+    ],
+    "presets": [
+      {
+        "name": "x-cart",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}

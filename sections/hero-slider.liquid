@@ -1,0 +1,75 @@
+<div class="hero-section">
+  <div class="container swiper" id="swiper-hero">
+    <div class="hero-slider-wrapper swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="hero-single-slider swiper-slide">
+          <div class="single-slider-part slider-text-content">
+            <h2 class="slider-heading">
+              {{ block.settings.slider_heading }}
+            </h2>
+            <p class="slider-subtitle">
+              {{ block.settings.slider_description }}
+            </p>
+            <a href="{{ block.settings.cta_link }}" class="slider-btn">{{ block.settings.cta_label }}</a>
+          </div>
+          <div class="single-slider-part slider-img-content">
+            {% if block.settings.slider_img != blank %}
+              <img
+                class="slider-img"
+                src="{{ block.settings.slider_img | img_url: 'original' }}"
+                alt="{{ block.settings.slider_img.alt }}"
+              >
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "settings": [],
+  "blocks": [
+    {
+      "name": "slider item",
+      "type": "slider_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "slider_heading",
+          "label": "Slider Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "slider_description",
+          "label": "slider description"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA Btn label"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA Btn link"
+        },
+        {
+          "type": "image_picker",
+          "id": "slider_img",
+          "label": "slider image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider"
+    }
+  ]
+}
+{% endschema %}

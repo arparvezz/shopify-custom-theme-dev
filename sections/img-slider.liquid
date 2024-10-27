@@ -1,0 +1,71 @@
+<!-- photo slider section -->
+<div class="photo-gallary-section">
+  <div class="container">
+    <h2 class="photo-gallary-section-title">
+      {{ section.settings.slider_heading -}}
+      <a href="{{ section.settings.slider_url }}" class="underline-animation"
+        > @{{ section.settings.slider_link_label -}}
+      </a>
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="swiper" id="swiper-gallary">
+      <div class="photo-gallary-wrapper swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <img
+              src="{{ block.settings.single_img | img_url: 'original' }}"
+              alt="{{ block.settings.single_img.alt }}"
+              class="gallary-single-photo"
+            >
+          </div>
+        {% endfor %}
+      </div>
+      <!-- If we need pagination -->
+      <div class="gallary-pagination"></div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Photo slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "slider_heading",
+      "label": "Slider heading"
+    },
+    {
+      "type": "url",
+      "id": "slider_url",
+      "label": "Select URL"
+    },
+    {
+      "type": "text",
+      "id": "slider_link_label",
+      "label": "Slider link label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "single_img",
+      "name": "single img",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "single_img",
+          "label": "Select single img"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Photo slider",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

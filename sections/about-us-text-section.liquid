@@ -1,0 +1,53 @@
+{% stylesheet %}
+  /* about us text section */
+  .about-us-section {
+    margin: 50px 0;
+  }
+
+  .about-us-heading-part {
+    margin-bottom: 25px;
+  }
+
+  .about-us-headline {
+    margin: 10px 0;
+    color: purple;
+  }
+{% endstylesheet %}
+
+<!-- about us section -->
+<div class="about-us-section">
+  <div class="container">
+    <div class="about-us-wrapper">
+      <div class="about-us-heading-part">
+        <h3 class="about-us-headline">{{ section.settings.about_us_heading }}</h3>
+      </div>
+      <div class="about-us-content-part">
+        <p class="about-us-info">{{ section.settings.about_us_info }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+    "name": "About us text section",
+    "settings": [
+            {
+                "type": "text",
+                "id": "about_us_heading",
+                "label": "Enter heading",
+                "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+            },{
+                "type": "richtext",
+                "id": "about_us_info",
+                "label": "Enter description"
+
+            }
+        ],
+        "presets": [
+            {
+                "name": "About us text section"
+            }
+        ]
+}
+{% endschema %}

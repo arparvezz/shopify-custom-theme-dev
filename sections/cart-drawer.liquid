@@ -1,0 +1,48 @@
+
+<!-- cart drawer -->
+<div class="cart-drawer-section" id="cart-{{ section.id }}">
+  <div class="cart-drawer-inner">
+    <div class="cart-drawer-header">
+      <button class="cart-drawer-cross-btn"><i class="fa-solid fa-xmark"></i></button>
+      <a class="cart-page-link" href="/cart">Go to Cart</a>
+    </div>
+    {% form 'cart', cart %}
+      <div class="cart-drawer-body">
+        <h2 class="cart-drawer-body-title">Cart - {{ cart.item_count }}</h2>
+        {% if cart.item_count > 0 %}
+          {% for item in cart.items %}
+            <div class="cart-drawer-body-single-product">
+              <img src="{{ item.image |  img_url: 'original' }}" alt="" class="cart-product-thumbnail">
+              <div class="cart-product-info">
+                <a href="#" class="cart-product-name underline-animation">{{ item.title }}</a>
+                <p class="cart-product-price">{{ item.price | money_with_currency }}</p>
+                <div class="cart-quantity-field">
+                  <button class="cart-quantity-plus">+</button>
+                  <input type="number" name="quantity" id="quantity" class="cart-quantity" value="{{ item.quantity }}">
+                  <button class="cart-quantity-minus">-</button>
+                </div>
+                <p class="cart-product-total">{{ item.final_price | money_with_currency }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h2>Your cart is empty!</h2>
+        {% endif %}
+      </div>
+      <div class="cart-drawer-footer">
+        {% if cart.item_count > 0 %}
+            <button class="clear-cart-btn">clear cart</button>
+        {% endif %}
+        <button class="cart-checkout-btn" type="submit" name="checkout">
+          Checkout - <span class="cart-checkout-btn-money">{{ cart.total_price | money_with_currency }}</span>
+        </button>
+      </div>
+    {% endform %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Cart Drawer",
+    "settings": []
+  }
+{% endschema %}

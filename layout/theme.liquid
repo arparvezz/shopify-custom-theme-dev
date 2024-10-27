@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sportsmonk - Home</title>
+      <!-- font awesome cdn -->
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css"
+  integrity="sha512-B46MVOJpI6RBsdcU307elYeStF2JKT87SsHZfRSkjVi4/iZ3912zXi45X5/CBr/GbCyLx6M1GQtTKYRd52Jxgw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+>
+        <!-- swiper slider -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <!-- url parse lib -->
+        <script src="https://cdn.jsdelivr.net/npm/url-parse@1.5.10/dist/url-parse.min.js"></script>
+        
+        <!-- font awesome cdn -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+        <!-- css files goes here -->
+        {{ 'style.css' | asset_url | stylesheet_tag }}
+        <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+        {{ content_for_header }}
+    </head>
+    <body>
+        {% section 'announcement-bar' %}
+        {% section 'header' %}
+        {% section 'cart-drawer' %}
+        {{ content_for_layout }}
+
+        {% section 'footer' %}
+
+        {{ 'script.js' |  asset_url | script_tag }}
+      {{ 'cart.js' | asset_url | script_tag }}
+
+    </body>
+</html>

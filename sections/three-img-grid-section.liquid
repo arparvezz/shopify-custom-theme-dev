@@ -1,0 +1,103 @@
+{% stylesheet %}
+  /* about us img box */
+  .about-us-img-box {
+    margin: 50px 0;
+  }
+  .about-us-img-box-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 800px) {
+    .about-us-img-box-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+  .about-us-single-img-box {
+    background-color: #efefef;
+    overflow: hidden;
+  }
+  .about-us-single-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  .about-us-single-img:hover {
+    transform: scale(1.1);
+  }
+  .about-us-single-img-box.about-us-single-img-box-one {
+    grid-row: 1 / span 2;
+  }
+{% endstylesheet %}
+
+<!-- about us image box -->
+<div class="about-us-img-box">
+  <div class="container">
+    <div class="about-us-img-box-wrapper">
+      <div class="about-us-single-img-box about-us-single-img-box-one">
+        {% if section.settings.first_img != blank %}
+          <img
+            class="about-us-single-img about-us-single-img-one"
+            src="{{ section.settings.first_img |  img_url: 'original' }}"
+            alt="first-img"
+          >
+        {%- else %}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {% endif %}
+      </div>
+      <div class="about-us-single-img-box about-us-single-img-box-two">
+        {% if section.settings.second_img != blank %}
+            <img
+              class="about-us-single-img about-us-single-img-one"
+              src="{{ section.settings.second_img |  img_url: 'original' }}"
+              alt="second-img"
+            >
+          {%- else %}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {% endif %}
+      </div>
+      <div class="about-us-single-img-box about-us-single-img-box-three">
+        {% if section.settings.third_img != blank %}
+            <img
+              class="about-us-single-img about-us-single-img-one"
+              src="{{ section.settings.third_img |  img_url: 'original' }}"
+              alt="third-img"
+            >
+          {%- else %}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Three img grid section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "first_img",
+      "label": "Select first image"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_img",
+      "label": "Select second image"
+    },
+    {
+      "type": "image_picker",
+      "id": "third_img",
+      "label": "Select third image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Three img grid section"
+    }
+  ]
+}
+{% endschema %}

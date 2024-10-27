@@ -1,0 +1,50 @@
+<!-- newsletter section -->
+<div class="newsletter-section">
+  <div class="container">
+      <div class="newsletter-wrapper">
+          <div class="newsletter-text-section">
+              <h2 class="newsletter-section-title">{{ section.settings.section_title }}</h2>
+              <p class="newsletter-section-subtitle">{{ section.settings.section_subtitle }}</p>
+          </div>
+          <div class="newsletter-form-section">
+            {% form 'customer' %}
+                {{ form.errors |  default_errors }}
+                {% if form.posted_successfully? %}
+                    <p>Submitted!</p>
+                {% endif %}
+              <input type="email" name="contact[email]" id="email" class="newsletter-email-field" placeholder="john@example.com">
+              <button type="submit" class="newsletter-submit-btn">{{ section.settings.cta_btn_label }}</button>
+            {% endform %}
+          </div>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Newsletter",
+    "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section title"
+        }, {
+          "type": "textarea",
+          "id": "section_subtitle",
+          "label": "Enter description"
+        }, {
+          "type": "text",
+          "id": "cta_btn_label",
+          "label": "CTA Btn label",
+          "default": "Submit"
+        }
+    ],
+    "presets": [
+      {
+        "name": "Newsletter",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}

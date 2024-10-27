@@ -1,0 +1,97 @@
+ {% comment %} CSS File {% endcomment %}
+ {{ "contact.css" | asset_url |  stylesheet_tag }}
+ 
+ <!-- contact form section -->
+ <div class="contact-form-section">
+  <div class="container">
+      <div class="contact-form-wrapper">
+          <div class="contact-form-part">
+              <h5 class="contact-form-subtitle">{{ section.settings.form_subtitle }}</h5>
+              <h3 class="contact-form-title">{{ section.settings.form_title }}</h3>
+                {% form 'contact',class:'contact-form' %}
+                  <input type="text" name="contact[name]" id="name" class="contact-form-input contact-name" placeholder="Your name">
+                  <input type="email" name="contact[email]" id="email" class="contact-form-input contact-email" placeholder="Your email">
+                  <input type="text" name="contact[subject]" id="subject" class="contact-form-input contact-subject" placeholder="Your subject">
+                  <textarea name="contact[body]" id="message" class="contact-form-input contact-message" placeholder="Message..." rows="4"></textarea>
+                  <button type="submit" class="contact-submit-btn">Submit</button>
+                {% endform %}
+            
+          </div>
+          <div class="employee-info-part">
+
+            {% for block in section.blocks %}
+              <div class="single-employee-info-box">
+                  <div class="single-employee-img">
+                      <img class="employee-img" src="{{ block.settings.employee_img |  img_url: 'original' }}" alt="">
+                  </div>
+                  <div class="single-employee-info">
+                      <h3 class="employee-name">{{ block.settings.employee_name }}</h3>
+                      <p class="employee-position">{{ block.settings.employee_position }}</p>
+                      <p class="employee-phone">Phone :{{ block.settings.employee_phone }}</p>
+                      <p class="employee-email">Email :{{ block.settings.employee_email }}</p>
+                  </div>
+              </div>
+            {% endfor %}
+
+          </div>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+      {
+        "type": "text",
+        "id": "form_subtitle",
+        "label": "Enter subtitle",
+        "default": "Leave a message"
+      },{
+        "type": "text",
+        "id": "form_title",
+        "label": "Enter title",
+        "default": "We love to hear from you"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "single_employee_box",
+        "name": "Single Employee box",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "employee_img",
+            "label": "Employee img"
+          },
+          {
+            "type": "text",
+            "id": "employee_name",
+            "label": "Employee Name",
+            "default": "Jen carlo"
+          },{
+            "type": "text",
+            "id": "employee_position",
+            "label": "Employee position",
+            "default": "Marketing Manager"
+          },{
+            "type": "text",
+            "id": "employee_phone",
+            "label": "Enter Phone Number",
+            "default": "+55012 12334"
+          },{
+            "type": "text",
+            "id": "employee_email",
+            "label": "Enter email",
+            "default": "Example@email.com"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Contact form"
+      }
+    ]
+}
+{% endschema %}

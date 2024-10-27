@@ -1,0 +1,133 @@
+<!-- featured product section -->
+<div class="featured-product-section">
+  <div class="container">
+    <div class="featured-product-title-part">
+      <h3 class="featured-product-section-title">{{ section.settings.section_title }}</h3>
+      <p class="featured-product-section-subtitle">{{ section.settings.section_subtitle }}</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="featured-product-wrapper">
+      {% for product in section.settings.featured_collection.products %}
+        {% form 'product', product %}
+          <div class="single-product-box">
+            <div class="product-featured-img-box sale-badge">
+              <img
+                class="product-featured-img"
+                src="{{ product.featured_image |  img_url: 'original' }}"
+                alt="{{ product.title }}"
+              >
+            </div>
+            <div class="product-details">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="quantity" value="1" min="1">
+              <p class="product-vendor">{{ product.vendor }}</p>
+              <a href="{{ product.url }}" class="product-title underline-animation">{{ product.title }}</a>
+              <div class="product-details-inner">
+                <div class="product-price-rating">
+                  <p class="product-price">
+                    {{ product.price | money_with_currency }}
+                    <del>{{ product.compare_at_price | money_with_currency }}</del>
+                  </p>
+                  <div class="star-icon-wrapper">
+                    {% for i in (1..5) %}
+                      <div class="star-icon">
+                        <i class="fa-solid fa-star"></i>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <button class="add-to-cart-btn" type="submit">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        {% endform %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{{ 'cart.js' | asset_url | script_tag }}
+<script>
+      const addToCartForms = document.querySelectorAll('form[action="/cart/add"]');
+
+  addToCartForms.forEach((form) => {
+    form.addEventListener("submit", async (event) => {
+      // Prevent normal submission
+      event.preventDefault();
+
+      // Submit form with ajax
+      await fetch("/cart/add", {
+        method: "post",
+        body: new FormData(form),
+      });
+
+      // Get new cart object
+      const res = await fetch("/cart.json");
+      const cart = await res.json();
+
+      // Update cart count
+      document.querySelectorAll(".cart-count-number").forEach((el) => {
+        el.textContent = cart.item_count;
+      });
+
+    // updating the cart drawer
+      fetch("/?sections=cart-drawer")
+        .then(res => res.text())
+        .then(result => {
+          let div = document.createElement('div');
+          let firstResponse = JSON.parse(result);
+          let data = firstResponse['cart-drawer']
+          div.innerHTML = data;
+          let finalCode = div.querySelector('.cart-drawer-body').innerHTML;
+
+          document.querySelector('.cart-drawer-body').innerHTML = finalCode;
+
+          // update cart quantity
+          document.querySelector('.cart-checkout-btn-money').innerText = div.querySelector('.cart-checkout-btn-money').innerText;
+
+          // open cart drawer after adding a product
+          document.querySelector('.cart-drawer-section').classList.add('cart-drawer-active');
+          
+        })
+        .catch(err => err)
+
+
+      
+    updateSCart()
+
+
+    });
+
+
+  });
+</script>
+{% schema %}
+{
+  "name": "Featured products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Section sub-title"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Select Featured collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

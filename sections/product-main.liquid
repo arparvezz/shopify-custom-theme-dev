@@ -1,0 +1,300 @@
+
+{%  stylesheet  %} 
+
+.product-section{
+    margin: 50px 0;
+}
+.product-section-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+}
+@media (max-width: 800px){
+    .product-section-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    } 
+}
+.product-img-part,
+.product-content-part {
+    flex: 1;
+}
+
+.product-featured-img {
+    max-width: 100%;
+}
+
+
+
+.product-other-img {
+    max-width: 100px;
+    width: 100%;
+    border: 1px solid rgb(247, 243, 243);
+    cursor: pointer;
+}
+.product-other-img:hover{
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+.product-content-part {
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+}
+
+.product-form-subtitle {
+    font-size: .8rem;
+    color: purple;
+}
+
+.product-form-title {
+    font-size: 3rem;
+}
+.product-form-price{
+    font-size: 1.5rem;
+}
+.product-details-title {
+    margin: 10px 0;
+}
+.variant-selector-title{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.single-color-variant {
+    margin: 0px 0px 8px 0px;
+  }
+
+.product-form-quantity-label{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.product-form-quantity-field {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    gap: 5px;
+}
+
+.product-form-quantity-plus,
+.product-form-quantity-minus {
+    border: none;
+    padding: 5px 10px 8px;
+    border-radius: 5px;
+}
+
+
+.product-form-quantity {
+    width: 150px;
+    border: 1px solid #d3d3d3;
+    padding: 6px;
+    border-radius: 5px;
+}
+
+.product-form-quantity:focus {
+    outline: none;
+}
+
+.product-form-buy-now-btn {
+    background: green;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.product-form-add-to-cart-btn {
+    background: purple;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.product-details-text {
+    margin: 10px 0;
+}
+/* variant selector code */
+  fieldset {
+    display: flex;
+    gap: 3px;
+    border: none;
+    padding: 20px 0;
+    margin: 0;
+}
+  .variant-radio-btn {
+    display: none;
+}
+.variant-radio-btn-label {
+    padding: 5px;
+    background: black;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #dddeee;
+    transition: .2s ease-in-out;
+}
+.variant-radio-btn-label:hover {
+    background: white;
+    color: black;
+}
+  /* when radio btn active */
+  .variant-radio-btn:checked + .variant-radio-btn-label {
+    background: red;
+    color: black;
+  }
+
+  /* variant selector radio btn design */
+  fieldset > div > label {
+    background: #efefef;
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    border: 1px solid #dddeee;
+    cursor: pointer;
+}
+fieldset > div > label:hover {
+    background: gray;
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+}
+fieldset > div > input[type="radio"] {
+    display: none;
+}
+fieldset > div > input[type="radio"]:checked + label {
+    background: black;
+    color: white;
+}
+
+{% endstylesheet %} 
+<!-- product section -->
+<div class="product-section">
+    <div class="container">
+        {%  form 'product', product %}
+        <div class="product-section-wrapper">
+            <div class="product-img-part">
+                <div class="product-featured-img-part">
+                    <img class="product-featured-img" src="{{ product.featured_image |  img_url: 'original' }}" alt="{{ product.title }}">
+                </div>
+                {% if product.images.size > 1 %}
+                <div class="product-other-images">
+                    {% for image in product.images %}
+                    <img class="product-other-img" src="{{ image | img_url: 'original' }}" alt="{{ image.alt }}">
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="product-content-part">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <p class="product-form-subtitle">{{ product.collections }}</p>
+                <h2 class="product-form-title">{{ product.title }}</h2>
+                <p class="product-form-price">{{ product.price | money_with_currency }}</p>
+
+                <!-- product variants -->
+                        
+                 {% if product.variants.size > 1 %}
+                    <div class="product-variants-wrapper">
+                      {% for option in product.options_with_values %}
+                        <fieldset>
+                          <legend>{{ option.name }}</legend>
+                          {% for value in option.values %}
+                            <div>
+                              <input
+                                type="radio"
+                                {% if option.selected_value == value %}
+                                  checked
+                                {% endif %}
+                                name="{{ option.name }}"
+                                value="{{ value }}"
+                                id="{{ option.name |  handleize }}-{{ value | handleize }}"
+                              >
+                              <label for="{{ option.name |  handleize }}-{{ value | handleize }}">{{ value }}</label>
+                            </div>
+                          {% endfor %}
+                        </fieldset>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                <div class="product-form-quantity-fields">
+                    <h4 class="product-form-quantity-label">Quantity</h4><br>
+                    <div class="product-form-quantity-field">
+                        <button class="product-form-quantity-plus">+</button>
+                        <input type="number" name="quantity" id="quantity" class="product-form-quantity" value="1" min="1">
+                        <button class="product-form-quantity-minus">-</button>
+                    </div>
+                    
+                </div>
+                <div class="product-form-btns">
+                    <button type="submit" class="product-form-add-to-cart-btn">Add to cart</button>
+                    <button class="product-form-buy-now-btn">Buy Now</button>
+                </div>
+                <div class="product-form-product-details">
+                    <h3 class="product-details-title">Product Description</h3>
+                    <p class="product-details-text">{{ product.description }}</p>
+                </div>
+            </div>
+            
+        </div>
+{% endform %}
+    </div>
+ </div>
+
+<script>
+    // Variant selector
+  let product = {{ product | json }}
+  document.querySelectorAll('.product-variants-wrapper input[type="radio"]').forEach( radio => {
+    radio.addEventListener('change', function(event){
+      var selectedOptions = [];
+      document.querySelectorAll('.product-variants-wrapper input[type="radio"]:checked').forEach( radio => {
+        selectedOptions.push(radio.value)
+      })
+      // variant matching here
+      var matchedVariant = product.variants.find(variant => {
+        var pass = true;
+        for(var i = 0 ; i < selectedOptions.length; i++){
+            if(selectedOptions.indexOf(variant.options[i]) === -1){
+              pass = false;
+              break;
+            }
+        }
+        return pass
+      })
+      // change the product id by radio btns values
+
+        //  document.querySelector('#product-id').value = matchedVariant.id; /-- getting an error --/
+
+        // suggestion from chatGPT
+      document.querySelector('input[name="id"]').value = matchedVariant.id;
+
+
+      // change the url
+      var url = new URLParse(window.location.url, true);
+
+      url.query.variant = matchedVariant.id; 
+      window.history.replaceState(null,null,url.toString())
+      console.log(url.toString());
+
+    })
+  })
+</script>
+ {% schema %}
+ {
+    "name": "Product main",
+    "settings": [
+        
+        ],
+        "presets": [
+            {
+                "name": "Product main"
+            }
+        ]
+ }
+ {% endschema %}

@@ -1,0 +1,103 @@
+
+<!-- footer section -->
+<div class="footer-section">
+  <div class="container">
+    <footer>
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'info_section' %}
+            <div class="footer-part footer-info-part">
+              <img class="logo" src="{{ block.settings.footer_logo | img_url: 'medium' }}" alt="footer logo">
+              <p>{{ block.settings.company_info }}</p>
+              <div class="social-icons-wrapper">
+                <a href="{{ block.settings.facebook_url }}"><i class="fa-brands fa-facebook"></i></a>
+                <a href="{{ block.settings.instagram_url }}"><i class="fa-brands fa-instagram"></i></a>
+                <a href="{{ block.settings.pinterest_url }}"><i class="fa-brands fa-twitter"></i></a>
+                <a href="{{ block.settings.twitter_url }}"><i class="fa-brands fa-pinterest"></i></a>
+              </div>
+            </div>
+
+          {% when 'footer_menu' %}
+            <div class="footer-part">
+              <h2>{{ block.settings.footer_menu_heading }}</h2>
+              <div class="footer-links">
+                {% for link in block.settings.footer_menu.links %}
+                  <a class="footer-link" href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </footer>
+    <section class="copyright-section">
+      <h3>{{ section.settings.copyright_text }}</h3>
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "footer",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "copyright_text",
+      "label": "Copyright text here"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_section",
+      "name": "Info section",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "footer_logo",
+          "label": "select footer logo"
+        },{
+          "type": "richtext",
+          "id": "company_info",
+          "label": "Company info"
+        },{
+          "type": "url",
+          "id": "facebook_url",
+          "label": "Facebook URL"
+        },{
+          "type": "url",
+          "id": "instagram_url",
+          "label": "instagram URL"
+        },{
+          "type": "url",
+          "id": "pinterest_url",
+          "label": "pinterest URL"
+        },{
+          "type": "url",
+          "id": "twitter_url",
+          "label": "twitter URL"
+        }
+      ]
+    },{
+      "type": "footer_menu",
+      "name": "Footer menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "footer_menu_heading",
+          "label": "Footer menu heading"
+        },{
+          "type": "link_list",
+          "id": "footer_menu",
+          "label": "Select Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "footer",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,46 @@
+<!-- icon box section -->
+<div class="icon-box-section">
+  <div class="container">
+      <div class="icon-box-wrapper">
+        {% for block in section.blocks limit:6 %}
+          <div class="single-icon-box">
+              <img class="single-icon" src="{{ block.settings.icon |  img_url: 'original' }}" alt="">
+              <p class="single-icon-text">{{ block.settings.icon_title }}</p>
+          </div>
+        {% endfor %}
+      </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Icon box section",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "single_icon_box",
+        "name": "Single icon box",
+        "limit": 6,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Select Icon"
+          },{
+            "type": "text",
+            "id": "icon_title",
+            "label": "Enter Icon title",
+            "default": "Free Delivery"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon box section",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}

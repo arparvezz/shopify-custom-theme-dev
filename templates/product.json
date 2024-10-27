@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "page-title": {
+      "type": "page-title-section",
+      "settings": {
+      }
+    },
+    "product-main": {
+      "type": "product-main",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "page-title",
+    "product-main"
+  ]
+}

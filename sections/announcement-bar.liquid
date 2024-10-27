@@ -1,0 +1,25 @@
+<!-- announcment bar -->
+<div class="announcment-bar">
+  <div class="container">
+      <h4 class="announcment-bar-text ">{{ section.settings.announcement_text }}</h4>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "announement bar",
+    "settings": [
+        {
+          "type": "text",
+          "id": "announcement_text",
+          "label": "Enter announcement text",
+          "default": "Announce a Offer"
+        }
+    ],
+    "presets": [
+      {
+        "name": "announement bar",
+      }
+    ]
+  }
+{% endschema %}

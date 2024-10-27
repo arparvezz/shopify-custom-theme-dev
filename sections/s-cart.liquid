@@ -1,0 +1,47 @@
+{% comment %} S cart section - section rendering api testing {% endcomment %}
+
+<style>
+  .s-cart-wrapper{
+    margin: 20px 0;
+    background-color: #f4ecf7;
+    padding: 50px;
+    border-radius: 20px;
+    border: 1px solid #ebdef0;
+  }
+  .single-item{
+    margin: 50px 0;
+    padding: 50px;
+    background: #c39bd3;
+    color: white;
+  }
+  .single-item h2 {
+    margin-bottom: 5px;
+  }
+</style>
+<div class="container">
+
+  <div class="s-cart-wrapper" id="s-cart">
+    <h2>S cart - section rendering api testing </h2>
+    <h4><strong>Cart item {{ cart.item_count }}</strong></h4>
+    {% for item in cart.items %}
+      <div class="single-item">
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.price |  money_with_currency }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  
+</div>
+
+
+{% schema %}
+  {
+    "name": "S cart",
+    "settings": [],
+    "presets": [
+      {
+        "name": "S cart"
+      }
+    ]
+  }
+{% endschema %}
